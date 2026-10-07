@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun Kak Fia!</title>
+    <!-- Tailwind CSS & Google Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+        .font-script {
+            font-family: 'Sacramento', cursive;
+        }
+        /* Animasi Balon Jatuh */
+        .balloon {
+            position: absolute;
+            bottom: -150px;
+            width: 40px;
+            height: 50px;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            animation: floatUp 8s infinite ease-in;
+            z-index: 10;
+        }
+        .balloon::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 18px;
+            width: 2px;
+            height: 15px;
+            background-color: rgba(255,255,255,0.7);
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-110vh) rotate(20deg);
+                opacity: 0;
+            }
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: flex;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-100 via-purple-100 to-pink-200 min-h-screen text-gray-800 relative flex flex-col justify-center items-center">
+
+    <!-- Kontainer Balon Jatuh (Animasi Latar Belakang) -->
+    <div id="balloon-container" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+
+    <!-- HALAMAN 1: Pembuka / Cover -->
+    <div id="page-1" class="page active min-h-screen w-full flex-col items-center justify-center p-6 text-center z-20">
+        <div class="bg-white/80 backdrop-blur-md p-8 md:p-12 rounded-3xl shadow-2xl max-w-lg w-full border border-pink-200 transform transition-all hover:scale-105 duration-300">
+            <span class="text-5xl md:text-6xl mb-4 inline-block animate-bounce">🎂</span>
+            <h1 class="text-3xl md:text-4xl font-bold text-pink-600 mb-2">Spesial Untukmu</h1>
+            <h2 class="text-4xl md:text-5xl font-script text-purple-700 mb-6">Kak Fia Tercinta ✨</h2>
+            <p class="text-gray-600 mb-8 text-sm md:text-base">Ada sesuatu yang spesial nih dari seseorang yang paling sayang sama Kakak. Yuk buka kadonya!</p>
+            <button onclick="goToPage(2)" class="bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold px-8 py-3 rounded-full shadow-lg hover:from-pink-600 hover:to-purple-700 transition duration-300 transform hover:-translate-y-1">
+                Buka Ucapan 🎁
+            </button>
+        </div>
+        <p class="mt-6 text-xs text-gray-500">Dibuat khusus dengan ❤️ oleh Adik Jihan</p>
+    </div>
+
+    <!-- HALAMAN 2: Kartu Ucapan Utama -->
+    <div id="page-2" class="page min-h-screen w-full flex-col items-center justify-center p-4 md:p-6 text-center z-20">
+        <div class="bg-white/90 backdrop-blur-md p-6 md:p-10 rounded-3xl shadow-2xl max-w-2xl w-full border border-pink-200 relative">
+            <!-- Tombol Kembali -->
+            <button onclick="goToPage(1)" class="absolute top-4 left-4 text-xs md:text-sm bg-pink-100 text-pink-600 px-3 py-1.5 rounded-full hover:bg-pink-200 transition">
+                ← Kembali
+            </button>
+
+            <h2 class="text-3xl md:text-4xl font-bold text-pink-600 mt-4 mb-1">Selamat Ulang Tahun! 🎉</h2>
+            <h3 class="text-2xl md:text-3xl font-script text-purple-700 mb-6">Kak Fia</h3>
+
+            <!-- Kotak Pesan / Surat -->
+            <div class="bg-pink-50/70 p-5 md:p-6 rounded-2xl border border-pink-100 text-left mb-6 text-sm md:text-base leading-relaxed text-gray-700 space-y-3 shadow-inner">
+                <p>Halo Kak Fia,</p>
+                <p>Selamat ulang tahun ya Kak! Semoga di usia yang baru ini Kak Fia selalu diberikan kesehatan, kebahagiaan, kesuksesan dalam segala hal yang Kakak impikan, dan selalu dalam lindungan Tuhan.</p>
+                <p>Terima kasih ya Kak sudah jadi kakak yang baik, sabar, dan selalu ada. Maafkan Adik kalau sering bikin kesal. Adik selalu doanya yang terbaik buat Kak Fia!</p>
+                <p class="text-right font-script text-xl md:text-2xl text-purple-700 mt-4">Dari yang tersayang,<br><strong>Adik Jihan</strong></p>
+            </div>
+
+            <!-- Tombol Interaktif Tambahan -->
+            <button onclick="triggerConfetti()" class="bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold px-6 py-2.5 rounded-full shadow-md hover:opacity-90 transition duration-300 text-sm md:text-base">
+                Rayakan Lagi! 🎈✨
+            </button>
+        </div>
+        <p class="mt-4 text-xs text-gray-500">© 2026 - Dibuat spesial untuk Kak Fia oleh Adik Jihan</p>
+    </div>
+
+    <!-- Script JavaScript -->
+    <script>
+        // Fungsi Pindah Halaman
+        function goToPage(pageNumber) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(`page-${pageNumber}`).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Generator Balon Jatuh / Naik Otomatis
+        function createBalloon() {
+            const container = document.getElementById('balloon-container');
+            const balloon = document.createElement('div');
+            balloon.classList.add('balloon');
+
+            // Warna-warna pastel balon
+            const colors = ['#f472b6', '#c084fc', '#fb7185', '#e879f9', '#fbcfe8', '#ddd6fe'];
+            balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Posisi dan kecepatan acak
+            balloon.style.left = Math.random() * 100 + 'vw';
+            const duration = Math.random() * 4 + 6; // 6 - 10 detik
+            balloon.style.animationDuration = duration + 's';
+            
+            // Ukuran acak
+            const size = Math.random() * 20 + 30; // 30px - 50px
+            balloon.style.width = size + 'px';
+            balloon.style.height = (size * 1.25) + 'px';
+
+            container.appendChild(balloon);
+
+            // Hapus elemen setelah animasi selesai agar memori tidak penuh
+            setTimeout(() => {
+                balloon.remove();
+            }, duration * 1000);
+        }
+
+        // Munculkan balon secara berkala
+        setInterval(createBalloon, 400);
+
+        // Efek tambahan saat tombol "Rayakan Lagi" diklik
+        function triggerConfetti() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(createBalloon, i * 100);
+            }
+        }
+    </script>
+</body>
+</html>
